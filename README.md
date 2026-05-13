@@ -65,3 +65,38 @@ talent-iq/
 │
 ├── package.json
 └── README.md
+```
+
+# 🎮 Cómo jugar
+Movimiento
+
+Utiliza las flechas del teclado:
+
+⬆️ Arriba
+⬇️ Abajo
+⬅️ Izquierda
+➡️ Derecha
+Interacción
+
+Presiona:
+
+E
+
+para:
+
+hablar con NPCs
+ingresar a otras salas
+activar escenarios
+🧩 Mecánica principal
+
+Cada NPC presenta una situación distinta dentro del entorno laboral.
+
+El jugador debe escoger entre múltiples respuestas, las cuales generan puntajes internos asociados a habilidades blandas como:
+
+empatía
+liderazgo
+comunicación
+responsabilidad
+trabajo en equipo
+
+Las respuestas son enviadas al backend mediante fetch() y almacenadas para futuras evaluaciones o análisis.
