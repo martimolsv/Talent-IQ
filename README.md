@@ -172,7 +172,7 @@ Presiona `E` para:
 - Activar escenarios
 
 ## Generación de Reportes
-- Interactúa con al menos 5 NPCs diferentes
+- Interactúa con al menos 3 NPCs diferentes
 - El botón "Generar Reporte IA" se habilitará automáticamente
 - Haz clic para generar un análisis psicológico de tus decisiones
 - Ve a "Mis Resultados" para ver el reporte completo

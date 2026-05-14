@@ -559,6 +559,8 @@ function mostrarEscenario(
         btn.innerText =
         opcion.texto;
 
+        const npcNombre = nombreNPC;
+
         btn.onclick =
         async () => {
 
@@ -590,7 +592,14 @@ function mostrarEscenario(
             try {
                 const tiempoRespuesta = Date.now() - tiempoInicioInteraccion;
                 
-                await fetch(
+                console.log('Enviando decisión:', {
+                    npcId: npcNombre,
+                    opcionElegida: opcion.texto,
+                    puntajes: opcion.puntaje,
+                    tiempoRespuesta
+                });
+                
+                const response = await fetch(
 
                     `${API_URL}/guardar`,
 
@@ -606,7 +615,7 @@ function mostrarEscenario(
                         },
 
                         body: JSON.stringify({
-                            npcId: npcCercana.nombre,
+                            npcId: npcNombre,
                             opcionElegida: opcion.texto,
                             puntajes: opcion.puntaje,
                             tiempoRespuesta
@@ -614,21 +623,26 @@ function mostrarEscenario(
                     }
                 );
                 
-                // Update NPC counter
-                if (!npcsInteractuadosSet.has(npcCercana.nombre)) {
-                    npcsInteractuadosSet.add(npcCercana.nombre);
-                    npcsInteractuados++;
-                    npcCountSpan.textContent = npcsInteractuados;
-                    
-                    // Enable report button if 5 or more NPCs
-                    if (npcsInteractuados >= 5) {
-                        generarReporteBtn.disabled = false;
-                    }
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('Decisión guardada:', data);
+                } else {
+                    console.error('Error al guardar decisión:', response.status);
                 }
-
+                
             } catch(error) {
-
-                console.error(error);
+                console.error('Error en fetch:', error);
+            }
+            
+            if (!npcsInteractuadosSet.has(npcNombre)) {
+                npcsInteractuadosSet.add(npcNombre);
+                npcsInteractuados++;
+                npcCountSpan.textContent = npcsInteractuados;
+                console.log('NPCs interactuados:', npcsInteractuados);
+                
+                if (npcsInteractuados >= 3) {
+                    generarReporteBtn.disabled = false;
+                }
             }
         };
 

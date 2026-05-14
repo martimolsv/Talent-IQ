@@ -174,11 +174,11 @@ app.post("/api/reportes/generar", authMiddleware, async (req, res) => {
             where: { usuarioId: req.userId }
         });
         
-        if (conteo < 5) {
+        if (conteo < 3) {
             return res.status(400).json({ 
-                error: 'Debes interactuar con al menos 5 NPCs antes de generar un reporte',
+                error: 'Debes interactuar con al menos 3 NPCs antes de generar un reporte',
                 conteoActual: conteo,
-                requerido: 5
+                requerido: 3
             });
         }
         

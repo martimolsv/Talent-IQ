@@ -48,7 +48,7 @@ El reporte debe ser:
 Genera el reporte narrativo completo en español.`;
 
         // Llamar a la API de Gemini
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
+        const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
         const result = await model.generateContent(systemPrompt);
         const response = await result.response;
         const contenidoNarrativo = response.text();
