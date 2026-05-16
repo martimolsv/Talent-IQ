@@ -13,8 +13,15 @@ if (!token || !user) {
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 
-canvas.width = 1280;
-canvas.height = 720;
+// Set canvas to full viewport size
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+// Handle window resize
+window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
 
 const dialogo = document.getElementById("dialogo");
 const titulo = document.getElementById("titulo");

@@ -14,6 +14,17 @@ const npcInfo = {
 
 async function generarReporteIA(usuarioId, decisiones) {
     try {
+        //Buscamos  en la tabla el nombre real
+        const usuario = await prisma.usuario.findUnique({
+            where: {
+                id: usuarioId
+            }
+        });
+
+        //Extraemos el nombre del usuario
+        const nombreUsuario = usuario.nombre ? usuario.nombre : 'El candidato';
+
+
         // Construir el contexto de las decisiones
         const contextoDecisiones = decisiones.map((decision, index) => {
             return `
@@ -28,27 +39,27 @@ Decisión ${index + 1}:
         // Prompt de sistema para el Psicólogo Organizacional Senior
         const systemPrompt = `Eres un Psicólogo Organizacional Senior con más de 15 años de experiencia en evaluación de habilidades blandas en entornos corporativos. Tu especialidad es analizar patrones de comportamiento y generar reportes narrativos profundos y accionables.
 
-A continuación te presento el historial de decisiones de un usuario en un simulador RPG de evaluación de habilidades blandas. Cada decisión representa una situación laboral y la respuesta elegida por el usuario, con puntajes asociados a diferentes competencias.
+A continuación te presento el historial de decisiones del usuario llamado ${nombreUsuario} en un simulador RPG de evaluación de habilidades blandas. Cada decisión representa una situación laboral y la respuesta elegida por el usuario, con puntajes asociados a diferentes competencias.
 
 ${contextoDecisiones}
 
-Tu tarea es generar un reporte narrativo completo que incluya:
+Tu tarea es generar un reporte narrativo completo para ${nombreUsuario} que incluya:
 
-1. **Análisis de Fortalezas**: Identifica las habilidades blandas donde el usuario muestra mayor consistencia y puntajes altos. Proporciona ejemplos específicos de sus decisiones que demuestran estas fortalezas.
+1. **Análisis de Fortalezas**: Identifica las habilidades blandas donde ${nombreUsuario} muestra mayor consistencia y puntajes altos. Proporciona ejemplos específicos de sus decisiones que demuestran estas fortalezas.
 
 2. **Áreas de Desarrollo**: Señala las competencias que requieren mejora, basándote en patrones de decisiones con puntajes bajos o ausentes. Sé constructivo y ofrece perspectiva de crecimiento.
 
-3. **Patrones de Comportamiento**: Analiza tendencias en el estilo de toma de decisiones del usuario. ¿Es más proactivo o reactivo? ¿Prefiere liderazgo o trabajo en equipo? ¿Tiende a la autonomía o busca orientación?
+3. **Patrones de Comportamiento**: Analiza tendencias en el estilo de toma de decisiones de ${nombreUsuario}. ¿Es más proactivo o reactivo? ¿Prefiere liderazgo o trabajo en equipo? ¿Tiende a la autonomía o busca orientación?
 
-4. **Recomendaciones Específicas**: Proporciona 3-5 recomendaciones prácticas y accionables para el desarrollo profesional del usuario, basadas en su perfil actual.
+4. **Recomendaciones Específicas**: Proporciona 3-5 recomendaciones prácticas y accionables para el desarrollo profesional de ${nombreUsuario}, basadas en su perfil actual.
 
-5. **Potencial de Liderazgo**: Evalúa el potencial de liderazgo del usuario basándote en sus decisiones y proporciona una perspectiva honesta sobre su preparación para roles de mayor responsabilidad.
+5. **Potencial de Liderazgo**: Evalúa el potencial de liderazgo de ${nombreUsuario} basándote en sus decisiones y proporciona una perspectiva honesta sobre su preparación para roles de mayor responsabilidad.
 
-6. **Conclusión**: Un resumen ejecutivo de 2-3 párrafos que capture la esencia del perfil del usuario y su potencial en el entorno organizacional.
+6. **Conclusión**: Un resumen ejecutivo de 2-3 párrafos que capture la esencia del perfil de ${nombreUsuario} y su potencial en el entorno organizacional.
 
 El reporte debe ser:
 - Profesional y empático
-- Basado en evidencia (citar decisiones específicas)
+- Basado en evidencia (citar decisiones específicas de ${nombreUsuario})
 - Constructivo y orientado al crecimiento
 - Escrito en un tono que inspire confianza y motivación
 - De aproximadamente 800-1200 palabras
